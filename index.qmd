@@ -1,9 +1,21 @@
-# 서문 {.unnumbered}
+---
+title: "챗GPT 데이터 과학"
+subtitle: "ChatGPT for Data Science"
+---
 
-This is a Quarto book.
+# 데이터 과학
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+## 참고
 
-```{r}
-1 + 1
-```
+## 교육
+
+- [Tidyverse Hands-on](https://choonghyunryu.github.io/Edu_Tidyverse/)
+
+## 관련 링크
+
+- [R사용자회](https://r2bit.com)
+- [페이스북](https://www.facebook.com/groups/tidyverse)
+- [유튜브](https://www.youtube.com/channel/UCW-epmIvjBEhhVXw_F0Nqbw)
+- [GitHub](https://github.com/bit2r/)
+
+

@@ -1,0 +1,340 @@
+
+# 데이터 과학 맛보기
+
+데이터 과학을 각 부분별로 나눠서 상세히 살펴보는 대신 데이터 과학을 구성하는 데이터 가져오기(Import), 깔끔화(Tidy), 변환(Transform) 및 시각화(visualize)에 대해 전체적인 작업흐름을 신속히 일별하고 시작하는 것이
+최근의 추세다. 다양한 데이터에 대한 이해와 분석 경험이 쌓이면서 `tidyverse` 가 새롭게 출현했고,
+관련하여 데이터 문법(grammar of data), 그래프 문법(grammar of graphics), 표문법(grammar of table)이 
+`tidyverse`의 중추를 이루는데 각각을 자세히 살펴보기에 앞서 데이터 과학 맛보기를 통해 전반적인 
+흐름을 살펴보자.
+
+![`tidyverse` 작업흐름](images/tidyverse_framework.jpg)
+
+
+## 나이팅게일 신화탄생
+
+### 배경
+
+크림 전쟁은 1853년부터 1856년까지 일어난 큰 전쟁이었다. 
+한쪽에는 러시아, 반면 다른 한쪽에는 영국, 프랑스, 오스만 제국 (현대 투르키에), 그리고 나중에 사르디니아 (현대 이탈리아의 일부)가 동맹을 구성하여 전쟁을 치뤘다. 
+전쟁이 바로 시작된 이유는 러시아가 오스만 제국 내 정교회 신자들을 보호하려 하려는 명분을 내세웠지만, 사실 더많은 영토를 차지하기 위함이였다. 양측간 전쟁은 흑해를 두고 남하하는 러시아에 맞서 동맹군이 크림반도에서 발생하여 "크림전쟁"(Crimean War)으로 불린다.
+영화로 소개된 경기병대의 돌격 ("Charge of the Light Brigade"), 영국 간호사 플로렌스 나이팅게일의 활약, 전신과 철도의 본격적인 도입으로 큰 의미를 갖는 전쟁이기도 하다.
+많은 전투와 많은 사람들이 죽은 후, 1856년 파리 조약으로 전쟁은 마무리되어, 러시아 확장은 잠시 멈추게 돼었고, 오스만 제국도 한숨 돌린 계기가 되었다.
+
+크림 전쟁 중 스쿠타리 막사는 투루키에 스쿠타리 병원(Scutari Hospital, Turkey)은  영국 군 병원으로 개조되었다. 크림전쟁에서 부상을 당한 수많은 병사가 치료를 위해 이곳으로 보내졌지만, 병자와 부상병들을 감당할 수 있도록 설계되지 않았고 제대로된 역할도 수행하지 못했다. 1854년 나이팅게일이 간호사 일행과 함께 도착했을 때, 비위생적인 환경과 고통받는 병사들을 보고 경악했다. 나이팅게일의 스쿠타리 병원에서 경험은 병원과 의료 서비스를 개선하여 이와 같은 고통과 비극이 재발하지 않도록 향후 프로젝트의 중요한 동기와 방향이 되었다.
+
+![스쿠타리 병원의 한 병동 석판화 그림 (William Simpson)](images/scutari.jpg)
+
+환자의 사망율을 42%에서 2%로 낮추고 집중치료실(ICU)을 설치하여 상태가 중한 환자를 격리하여 집중관리하는 등 근대적인 간호체계를 수립하는 데 기여하였다. 
+
+### 원본 데이터
+
+크림 전쟁 중 스쿠타리 막사는 투루키에 스쿠타리 병원에서 몇년간에 걸쳐 
+수작업으로 종이에 분석가능한 형태의 자료를 만들어내는 것은 결코 쉬운 작업이 아니다.
+
+![원본 데이터](images/nightingale_raw_data.webp)
+
+
+### 그래프 진화
+
+[출처: [How Florence Nightingale Changed Data Visualization Forever - The celebrated nurse improved public health through her groundbreaking use of graphic storytelling](https://www.scientificamerican.com/article/how-florence-nightingale-changed-data-visualization-forever/)]{.aside}
+
+
+복잡한 논거를 제시하는 대신 구체적인 주장에 데이터 시각화와 데이터 스토리텔링(Storytelling)을 통해 청중에 한걸음 더 다가섰다.
+나이팅게일의 스토리텔링은 열악한 위생 상태와 과밀로 인해 불필요한 죽음이 얼마나 많이 발생하는지 이해하기 쉬운 비교를 통해 이야기를 구성해서 설득해 나갔다. 
+예를 들어, 군대 사망률을 민간인 사망률(유사한 환경의 맨체스터)과 비교하는 프레임을 제시하고, 군대 막사에서 생활하는 평시 병사들이 비슷한 연령대 민간인 남성보다 더 높은 비율로 사망하는 것을 제시했다. 이를 통해, 데이터가 보여주는 현실을 부정할 수 없게 만들었고, 군대 행정에 극적인 개혁을 이끌어냈다.
+
+
+::: {#fig-nightingale layout-ncol=5}
+
+![막대그래프](images/nightingale_graph_01.webp){#fig-barchart}
+
+![맨체스터 사망](images/nightingale_graph_02.webp){#fig-circular}
+
+![빅토리아 여왕 보고(I)](images/nightingale_graph_03.webp){#fig-circular}
+
+![빅토리아 여왕 보고(II)](images/nightingale_graph_04.webp){#fig-circular}
+
+![빅토리아 여왕 보고(III)](images/nightingale_graph_05.webp){#fig-circular}
+
+나이팅게일 그래프 진화과정
+:::
+
+
+### 설득
+
+나이팅게일은 크림 전쟁 중 병원에서의 위생 문제와 관련된 데이터를 수집하고 분석하여 그 결과를 시각화했고, 병원에서의 사망 원인 중 대부분이 감염성 질병으로 인한 것을 발견했다. 
+이러한 감염성 질병은 부적절한 위생 조건과 밀접한 관련이 있음을 확인했다.
+
+나이팅게일은 병원의 위생 상태를 개선을 통해 수많은 생명을 구할 수 있다는 사실을 확인했고
+연구결과와 권장 사항을 다양한 영국 정부부처에 제출했고, 특히 1858년에 영국의 장관들에게 보고서를 제출했다. 이를 통해서 군 병원의 위생 조건을 개선하는 데 큰 영향을 미쳤다.
+
+![나이팅게일과 빅토리아 여왕](images/nightingale_victoria.jpg)
+
+### 성과와 영향
+
+나이팅게일 캠페인이 민간 공중보건에 미친 가장 큰 영향은 실현되기까지 오랜 기간에 걸쳐 다각도로 검토되었고, 마침내 1875년 영국 공중보건법(British Public Health Act)에 법제화되었다. 이 법에는 잘 정비된 하수도, 깨끗한 수돗물, 건축법 규제 등의 요건이 담겨있다.
+질병에 대한 면역력을 강화하는 백신과 농작물 수확량을 획기적으로 늘리는 인공비료 개발과 함께 이 제도적인 노력으로 평균 수명을 두 배로 늘리는 원동력이 되었다.
+
+
+## 작업과정
+
+### 디지털 데이터
+
+[rladies/spain_nightingale](https://github.com/rladies/spain_nightingale) GitHub 
+저장소에서 엑셀 형태로 된 데이터를 가져와서 전처리할 수 있다.
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+death_raw <- read_excel("data/datos_florence.xlsx", sheet = "Sheet1", skip = 1)
+
+death_tbl <- death_raw |> 
+  janitor::clean_names() |> 
+  set_names(c("Month", "Army", "Disease", "Wounds", "Other", "Disease.rate", "Wounds.rate", "Other.rate")) |> 
+  mutate(Date = lubridate::my(Month)) |> 
+  separate(Month, into = c("Month", "Year"), sep = " |_") |> 
+  select(Date, Month, Year, everything()) 
+
+death_tbl
+```
+
+`HistDate` 패키지에 동일한 데이터셋이 잘 정제되어 있어 이를 바로 활용해도 좋다.
+
+```{r}
+library(HistData)
+
+HistData::Nightingale |> 
+  as_tibble()
+```
+
+### 데이터와 사투
+
+앞서 준비한 `death_tbl` 데이터프레임에서 사망 관련 데이터를 처리하고 시각화하기 위한 전처리를 수행하여 시각화를 위한 준비작업을 수행한다. 
+먼저 `Date`, `Disease.rate`, `Wounds.rate`, `Other.rate` 칼럼을 선택하고, `pivot_longer` 함수를 사용해 시각화에 적합한 데이터로 재구조화한다. 
+`str_replace_all` 함수를 사용하여 칼럼 이름에서 ".rate"를 제거하고, `ifelse` 함수를 이용해 날짜를 기준으로 나이팅게일 팀이 준비한 방식을 적용하기 전과후 "이전"과 "이후"로 체제로 구분한다. `factor` 함수를 사용하여 범주 순서를 정의하고, 마지막으로 `month` 함수를 이용해 날짜에서 해당 월을 추출하고 `death_viz`에 저장한다.
+
+```{r}
+death_viz <- death_tbl %>% 
+  select(Date, Disease.rate, Wounds.rate, Other.rate) %>% 
+  pivot_longer(-Date, names_to = "사망원인", values_to = "사망자수") |> 
+  mutate(사망원인 = str_replace_all(사망원인, "\\.rate", ""), 
+         체제 = ifelse(Date <= as.Date("1855-03-01"), "조치이전", "조치이후")) %>% 
+  mutate(체제 = factor(체제, levels = c("조치이전", "조치이후"))) %>%  
+  mutate(해당월 = month(Date, label = TRUE, abbr = TRUE)) |> 
+  mutate(사망원인 = case_when(사망원인 == "Disease" ~ "질병",
+                              사망원인 == "Wounds" ~ "부상",
+                              사망원인 == "Other" ~ "기타")) |> 
+  mutate(사망원인 = factor(사망원인, levels = c("질병", "부상", "기타")))
+
+death_viz
+```
+
+## 시각화
+
+'ggplot2' 패키지를 이용하여 크림전쟁 나이팅게일 활약상을 담은 데이터를 시각화한다. 
+나이팅게일 활약 전과 후로 데이터(`death_viz`)를 나눠 "크림전쟁 병사 사망원인"에 대한 극좌표계 시각화를 통해 이해하기 쉬운 설득력있는 시각화 결과물을 제시하고 있다.
+추가적으로, 'showtext' 패키지로 구글 "Noto Serif KR" 글꼴을 선택적용하고, 'hrbrthemes' 라이브러리를 이용하여 뒷 배경 검정색을 사용하여 붉은색 질병으로 인한 사망자수 확연한 감소를 시각적으로 강조한다.
+
+```{r}
+library(hrbrthemes) 
+library(showtext)
+showtext.auto()
+font_add_google(name = "Noto Serif KR", family = "noto_serif")
+noto_font <- "noto_serif"
+
+death_gg <- death_viz %>% 
+  ggplot(aes(x = 해당월, y = 사망자수, fill = 사망원인)) +
+  geom_col(color = "grey20") + 
+  theme_modern_rc(base_family = noto_font, subtitle_family = noto_font) + 
+  scale_fill_manual(values = c("firebrick", "orange", "#365181"), name = "") +
+  scale_y_sqrt() +
+  facet_wrap(~ 체제) + 
+  coord_equal(ratio = 1) +  
+  coord_polar() +
+  labs(title = "크림전쟁 병사 사망원인", 
+       subtitle = "데이터 시각화와 커뮤니케이션", 
+       caption = "데이터 출처: 크림전쟁 사망자") + 
+  theme(legend.position = "top", 
+        text = element_text(family = noto_font, size = 18),
+        axis.title.y = element_blank(),
+        axis.title.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        plot.margin = unit(rep(0.7, 4), "cm"),
+        plot.title = element_text(color = "white", family = noto_font, size = 25),
+        plot.caption = element_text(color = "grey70", family = noto_font, size = 12),
+        plot.subtitle = element_text(color = "grey70", size = 13),
+        legend.text = element_text(color = "white", size = 15),
+        strip.text = element_text(color = "white", size = 25, face = "bold", family = noto_font, hjust = 0.5))
+
+death_gg
+```
+
+
+### 선그래프
+
+나이팅게일은 간호 분야의 선구자로 잘 알려져 있지만, 통계학자로서 "콕스콤(CoxComb)" 또는 "장미 다이어그램"(Rose Diagram)으로 알려진 원그래프를 제시하였지만 현재는 시간의 흐름에 따라 병사 사망자수 변화를 조치 전후로 명확히 하는 방법으로 선그래프가 기본 기법으로 자리잡고 있다.
+
+```{r}
+extrafont::loadfonts()
+
+death_new_gg <- death_viz |> 
+  ggplot(aes(x = Date, y = 사망자수, color = 사망원인)) +
+    geom_line() +
+    geom_point() +
+    geom_vline(xintercept = as.Date("1855-03-15"), linetype= 2) +
+    theme_ipsum_pub(base_family = noto_font, subtitle_family = noto_font) +
+    labs(title = "크림전쟁 병사 사망원인", 
+         subtitle = "데이터 시각화와 커뮤니케이션", 
+         caption = "데이터 출처: 크림전쟁 사망자",
+         x = "월일") + 
+    scale_y_continuous(labels = scales::comma, limits = c(0, 1150)) +
+    theme(legend.position = "top", 
+          text = element_text(family = noto_font, size = 18),
+          axis.ticks = element_blank(),
+          plot.margin = unit(rep(0.7, 4), "cm"),
+          plot.title = element_text(color = "black", family = noto_font, size = 35),
+          plot.caption = element_text(color = "grey10", family = noto_font, size = 17),
+          plot.subtitle = element_text(color = "grey5", size = 13),
+          legend.text = element_text(color = "black", size = 15)) +
+    geom_segment(x = as.Date("1854-03-01"), y = 1100,
+                 xend = as.Date("1855-03-01"), yend = 1100,
+                 color = "gray70",
+                 arrow = arrow(length = unit(0.1, "inches"))) +
+    geom_segment(x = as.Date("1855-04-01"), y = 1100,
+                 xend = as.Date("1856-03-01"), yend = 1100,
+                 color = "gray15",
+                 arrow = arrow(length = unit(0.1, "inches"))) +
+    annotate("text", x = as.Date("1854-09-01"), y = 1140, label = "조치이전",
+             size = 8.5, color = "gray30", family = noto_font) +
+    annotate("text", x = as.Date("1855-09-01"), y = 1140, label = "조치이후",
+             size = 8.5, color = "gray15", family = noto_font)          
+
+death_new_gg
+```
+
+### 막대그래프
+
+동일한 정보를 막대그래프를 통해 시각화를 할 수도 있다. 원그래프와 비교하여 보면 명확하게 사망자수를 직관적으로 비교할 수 있다는 점에서 큰 장점이 있다.
+
+```{r}
+death_viz |> 
+  ggplot() +
+    geom_col(aes(x = Date, y = 사망자수, fill = 사망원인), colour="white") +
+    geom_vline(xintercept = as.Date("1855-03-15"), linetype= 2) +
+    scale_fill_manual(values = c("firebrick", "orange", "#365181")) + 
+    # theme_ipsum_pub(base_family = noto_font, subtitle_family = noto_font) +
+    labs(title = "크림전쟁 병사 사망원인", 
+         subtitle = "데이터 시각화와 커뮤니케이션", 
+         caption = "데이터 출처: 크림전쟁 사망자",
+         x = "월일") + 
+    scale_y_continuous(labels = scales::comma, limits = c(0, 1150)) +
+    theme(legend.position = "top", 
+          text = element_text(family = noto_font, size = 18),
+          axis.ticks = element_blank(),
+          plot.margin = unit(rep(0.7, 4), "cm"),
+          plot.title = element_text(color = "black", family = noto_font, size = 35),
+          plot.caption = element_text(color = "grey10", family = noto_font, size = 17),
+          plot.subtitle = element_text(color = "grey5", size = 13),
+          legend.text = element_text(color = "black", size = 15)) +
+    geom_segment(x = as.Date("1854-03-01"), y = 1100,
+                 xend = as.Date("1855-03-01"), yend = 1100,
+                 color = "gray70",
+                 arrow = arrow(length = unit(0.1, "inches"))) +
+    geom_segment(x = as.Date("1855-04-01"), y = 1100,
+                 xend = as.Date("1856-03-01"), yend = 1100,
+                 color = "gray15",
+                 arrow = arrow(length = unit(0.1, "inches"))) +
+    annotate("text", x = as.Date("1854-09-01"), y = 1140, label = "조치이전",
+             size = 8.5, color = "gray30", family = noto_font) +
+    annotate("text", x = as.Date("1855-09-01"), y = 1140, label = "조치이후",
+             size = 8.5, color = "gray15", family = noto_font) 
+```
+
+
+## 표 문법
+
+데이터 문법, 그래프 문법에 이어 최근 "표 문법"이 새롭게 자리를 잡아가고 있다.
+표 문법에 맞춰 나이팅게일 크림전쟁 사망자수를 조치 이전과 조치 이후로 나눠 요약하면 
+확연한 차이를 파악할 수 있다.
+
+`gt`와 `gtExtras` 패키지를 활용하여 `death_viz` 데이터프레임을 사망 원인별 사망자 수를 "조치 이전"과 "조치 이후"로 구분하여 표를 두개 생성한다. 
+각 표은 날짜, 질병, 부상, 기타 범주로 사망자 수와 그 합계를 표시하며, 
+총 사망자수가 250명을 초과하는 행에 대한 강조 색상을 입히고 나서 두 표를 나란히 배치하여
+조치 전후 효과를 시각적으로 비교한다.
+
+```{r}
+library(gt)
+library(gtExtras)
+
+before_tbl <- death_viz |> 
+  filter(체제 == "조치이전")
+
+after_tbl <- death_viz |> 
+  filter(체제 == "조치이후")
+
+before_gt <- before_tbl |> 
+  pivot_wider(names_from = 사망원인, values_from = 사망자수) |> 
+  select(날짜 = Date, 질병, 부상, 기타) |> 
+  mutate(합계 = 질병 + 부상 + 기타) |> 
+  gt() |> 
+    gt_theme_538() |> 
+    cols_align("center") |> 
+    fmt_integer( columns = 질병:합계) |> 
+    tab_spanner(label = "조치 이전", columns = c(질병, 부상, 기타)) |> 
+    data_color(
+      columns = c(질병, 부상, 기타, 합계),
+      rows = 합계 > 250,      
+      method = "numeric",
+      palette = "ggsci::red_material")
+
+after_gt <- after_tbl |> 
+  pivot_wider(names_from = 사망원인, values_from = 사망자수) |> 
+  select(날짜 = Date, 질병, 부상, 기타) |> 
+  mutate(합계 = 질병 + 부상 + 기타) |> 
+  gt() |> 
+    gt_theme_538() |> 
+    cols_align("center") |> 
+    fmt_integer( columns = 질병:합계) |> 
+  tab_spanner(label = "조치 이후", columns = c(질병, 부상, 기타)) |> 
+  data_color(
+    columns = c(질병, 부상, 기타, 합계),
+    rows = 합계 > 250,      
+    method = "numeric",
+    palette = "ggsci::red_material")
+
+gtExtras::gt_two_column_layout(list(before_gt, after_gt))
+
+```
+
+
+## 커뮤니케이션
+
+데이터를 기반으로 뭔가 유용한 것을 창출한 후에 이를 알리기 위해 커뮤니케이션 단계를 거치게 된다. 가장 흔히 사용하는 방식은 엑셀, 워드, 파워포인트와 같은 MS 오피스 제품을 활용하는 방식이다. 과거 SAS, SPSS, 미니탭 등 외산 통계 팩키지로 데이터를 분석하고 유용한 모형 등을 찾아낸 후에 이를 커뮤니케이션하기 위해 MS 오피스 제품을 통해 커뮤니케이션을 하기도 했다. 하지만, 각각은 별개의 시스템으로 분리되어 있어 일일이 사람손이 가는 번거러움이 많았다. 이를 해결하기 하는 방법은 하나의 도구 혹은 언어로 모든 작업을 처리하는 것이다. [^meghan]
+
+[^meghan] : [Meghan Hall (June 15, 2021), "Extending R Markdown", RStudio: R in Sports Analytics, ](https://meghan.rbind.io/slides/rstudio/hall_rstudio_2021)
+
+우선 엑셀은 `tidyverse` 로 대체가 되고, 워드는 R 마크다운을 거쳐 쿼토(Quarto), 파워포인트도 R 마크다운(`xaringan` 등)에서 진화한 `reveal.js` 기반 쿼토 슬라이드가 빠르게 자리를 잡아가고 있다.
+
+
+![오피스 기반 커뮤니케이션 현재 상태점검](images/nightingale_office.png)
+
+
+데이터 과학을 커뮤니케이션하는 방식은 다양한 방식이 존재하지만 직장상사 뿐만 아니라 
+집단지성을 넘어 AI를 적극 도입하여 데이터 분석 역량을 고도화하는데 
+동료 개발자 및 협업하시는 분들과 커뮤니케이션 뿐만 아니라
+불특정 다수를 대상으로 한 인터넷에 공개와 공유를 통해 새로운 관계를 맺어가는 것도 
+그 중요성을 더해가고 있다.
+
+- 동료 개발자나 협업하시는 분: `.qmd` 파일
+- 직장상사
+    - PDF 파일: `quarto`, `pandoc`
+    - 파워포인트 슬라이스덱: `reveal.js` 기반 `quarto`
+    - 대쉬보드: `flexdashboard`
+- 일반 공개
+    - 웹사이트: `distill`을 지나 `quarto`
+    - 블로그: `blogdown`을 지나 `quarto`
+    - 책: `bookdown`을 지나 `quarto`
+
+![](images/nightingale_communication.jpg)

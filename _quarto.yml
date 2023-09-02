@@ -1,24 +1,73 @@
 project:
   type: book
   output-dir: docs
+  render:
+    - "!map_pdf.qmd"
+
+lang: ko-KR
 
 book:
   title: "챗GPT 데이터 과학"
-  author: "Norah Jones"
-  date: "2023. 9. 2."
+  reader-mode: true
+
+  page-footer:
+    left: |
+      한국 R 사용자회에서 '챗GPT 데이터 과학' 전자책을 저작했습니다.
+    right: |
+      <a href="https://quarto.org/">쿼토(Quarto)</a>로 제작.
+  cover-image: cover.png
+  favicon: cover.png
+  site-url: https://r2bit.com/gpt-ds/
+  repo-url: https://github.com/bit2r/gpt-ds
+  repo-branch: main
+  repo-actions: [edit, issue]
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
 
-bibliography: references.bib
+    - part: "tidyverse"
+      chapters:
+        - whole_game.qmd
+
+    - part: "데이터셋"
+      chapters:
+        - penguins.qmd
+
+
+    - part: "-----"
+    - references.qmd
 
 format:
   html:
-    theme: cosmo
-  pdf:
-    documentclass: scrreprt
+    theme:
+      - chatGPT4ds.scss
+    number-depth: 3
+    number-sections: true
+    colorlinks: true
+    # cite-method: biblatex
+    code-overflow: wrap
+    code-link: true
+
+    author-meta: "이광춘, 신종화"
+    callout-appearance: simple
+
+editor: source
+
+filters:
+   - lightbox
+lightbox: auto
+link-citations: true
+
+bibliography: references.bib
+
+knitr:
+  opts_chunk:
+    message: false
+    warning: false
+    collapse: false
+editor_options:
+  chunk_output_type: console
 
 
+execute:
+  freeze: auto
 
